@@ -1,10 +1,20 @@
-﻿namespace Phonebook.SpyrosZoupas.DAL
+﻿using Spectre.Console;
+
+namespace Phonebook.SpyrosZoupas.DAL
 {
     public class ContactController
     {
         public static void AddContact()
         {
-            throw new NotImplementedException();
+            string name = AnsiConsole.Ask<string>("Contact's name:");
+            string email = AnsiConsole.Ask<string>("Contact's email:");
+            string phoneNumber = AnsiConsole.Ask<string>("Contact's phone number:");
+
+            using var db = new ContactContext();
+            // EF Core sets auto-increment to properties named ID by default
+            db.Add(new Contact { Name = name, Email = email, PhoneNumber = phoneNumber });
+
+            db.SaveChanges();
         }
 
         public static void DeleteContact()
