@@ -7,6 +7,6 @@ namespace Phonebook.SpyrosZoupas.DAL
         public DbSet<Contact> Contacts { get; set; } // represents a Contact table. Contact model is a row of Contact table
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
-            optionsBuilder.UseSqlServer($"Data Source=(LocalDb)\\TheCSharpAcademy");
+            optionsBuilder.UseSqlServer($"Server=(LocalDb)\\TheCSharpAcademy;Database=Phonebook;Trusted_Connection=True;");
     }
 }
