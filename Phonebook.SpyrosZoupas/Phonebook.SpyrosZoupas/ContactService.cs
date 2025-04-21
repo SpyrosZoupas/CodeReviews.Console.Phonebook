@@ -1,6 +1,8 @@
 ﻿using Phonebook.SpyrosZoupas.DAL;
 using Spectre.Console;
 using System.ComponentModel.DataAnnotations;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Text.RegularExpressions;
 
 namespace Phonebook.SpyrosZoupas
 {
@@ -19,8 +21,8 @@ namespace Phonebook.SpyrosZoupas
         public void InsertContact()
         {
             string name = AnsiConsole.Ask<string>("Contact's name:");
-            string email = GetEmailInput("Contact's email (please use format email@domain):");
-            string phoneNumber = GetPhoneNumberInput("Contact's phone number:");
+            string email = GetEmailInput("Contact's email");
+            string phoneNumber = GetPhoneNumberInput("Contact's phone number");
 
             _contactController.AddContact(new Contact { Name = name, Email = email, PhoneNumber = phoneNumber });
         }
@@ -28,13 +30,13 @@ namespace Phonebook.SpyrosZoupas
         private string GetEmailInput(string message)
         {
             return AnsiConsole.Prompt(
-                new TextPrompt<string>(message)
+                new TextPrompt<string>($"{message} (please use format email@domain.tld):")
                 .Validate((s) =>
                 {
                     var emailAddressAttribute = new EmailAddressAttribute();
-                    return emailAddressAttribute.IsValid(s)
+                    return Regex.IsMatch(s, @"^\w+([-+.']\w+)*@(\[*\w+)([-.]\w+)*\.\w+([-.]\w+\])*$")
                         ? Spectre.Console.ValidationResult.Success()
-                        : Spectre.Console.ValidationResult.Error("[red]Invalid email format. Please enter an email in the format of email@domain[/]");
+                        : Spectre.Console.ValidationResult.Error("[red]Invalid email format. Please enter an email in the format of email@domain.tld.[/]");
            
                 }));
         }
@@ -42,13 +44,13 @@ namespace Phonebook.SpyrosZoupas
         private string GetPhoneNumberInput(string message)
         {
             return AnsiConsole.Prompt(
-                new TextPrompt<string>(message)
+                new TextPrompt<string>($"{message} (please enter full phone number including country code):")
                 .Validate((s) =>
                 {
-                    var emailAddressAttribute = new EmailAddressAttribute();
-                    return emailAddressAttribute.IsValid(s)
+                    var phoneNumberAttribute = new PhoneAttribute();
+                    return Regex.Match(s, @"^(\+[0-9]{12})$").Success
                         ? Spectre.Console.ValidationResult.Success()
-                        : Spectre.Console.ValidationResult.Error("[red]Invalid email format.[/]");
+                        : Spectre.Console.ValidationResult.Error("[red]Invalid phone number format. Example of correct phone number: +441234567899[/]");
 
                 }));
         }
@@ -63,10 +65,10 @@ namespace Phonebook.SpyrosZoupas
                 contact.Name = AnsiConsole.Ask<string>("Updated name:");
 
             if (AnsiConsole.Confirm("Update contact email?"))
-                contact.Email = GetEmailInput("Updated email (please use format name@domain:");
+                contact.Email = GetEmailInput("Updated email");
 
             if (AnsiConsole.Confirm("Update contact phone number?"))
-                contact.PhoneNumber = GetPhoneNumberInput("Updated phone number:");
+                contact.PhoneNumber = GetPhoneNumberInput("Updated phone number");
 
             _contactController.UpdateContact(contact);
         }
