@@ -1,8 +1,9 @@
 ﻿using Phonebook.SpyrosZoupas.DAL;
 using Spectre.Console;
 using System.ComponentModel.DataAnnotations;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Text.RegularExpressions;
+using MailKit.Net.Smtp;
+using MimeKit;
 
 namespace Phonebook.SpyrosZoupas
 {
@@ -89,8 +90,33 @@ namespace Phonebook.SpyrosZoupas
                 .Title("Choose Contact")
                 .AddChoices(contacts.Select(c => c.Name)));
 
-            int id = contacts.Single(c => c.Name == option).Id;
+            int id = contacts.First(c => c.Name == option).Id;
             return _contactController.GetContactById(id);
+        }
+
+        public void SendEmail()
+        {
+            var contact = GetContactOptionInput();
+            MimeMessage mailMessage = new MimeMessage();
+            mailMessage.From.Add(new MailboxAddress("Spiros Zoupas", "ghideharug@gmail.com"));
+            mailMessage.To.Add(new MailboxAddress(contact.Name, contact.Email));
+
+            mailMessage.Subject = "Phonebook application";
+            mailMessage.Body = new TextPart("plain")
+            {
+                Text = @"Hello,
+
+I would like to inform you that your email address and phone number have been saved in my phonebook application.
+
+Regards,
+Spiros"
+            };
+
+            using var client = new SmtpClient();
+            client.Connect("smtp.gmail.com", 587, false);
+            client.Authenticate("ghideharug@gmail.com", "");
+            client.Send(mailMessage);
+            client.Disconnect(true);
         }
     }
 }

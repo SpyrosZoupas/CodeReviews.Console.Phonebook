@@ -24,6 +24,7 @@ namespace Phonebook.SpyrosZoupas
                     MenuOptions.UpdateContact,
                     MenuOptions.ViewAllContacts,
                     MenuOptions.ViewContact,
+                    MenuOptions.SendEmail,
                     MenuOptions.Quit));
 
                 switch (option)
@@ -43,6 +44,9 @@ namespace Phonebook.SpyrosZoupas
                     case MenuOptions.ViewAllContacts:
                         _contactService.GetAllContacts();
                         break;
+                    case MenuOptions.SendEmail:
+                        _contactService.SendEmail();
+                        break;
                     case MenuOptions.Quit:
                         Environment.Exit(0);
                         break;
@@ -58,6 +62,7 @@ namespace Phonebook.SpyrosZoupas
         UpdateContact,
         ViewContact,
         ViewAllContacts,
+        SendEmail,
         Quit
     }
 }
