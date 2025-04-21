@@ -29,9 +29,15 @@ namespace Phonebook.SpyrosZoupas
             // contact object is being returned from DbContext so from DB so it has accurate ID which is being used to identity
             // which row to update!
             var contact = GetContactOptionInput();
-            contact.Name = AnsiConsole.Ask<string>("Updated name:");
-            contact.Email = AnsiConsole.Ask<string>("Updated email:");
-            contact.PhoneNumber = AnsiConsole.Ask<string>("Updated phone number:");
+
+            if (AnsiConsole.Confirm("Update contact name?"))
+                contact.Name = AnsiConsole.Ask<string>("Updated name:");
+
+            if (AnsiConsole.Confirm("Update contact email?"))
+                contact.Email = AnsiConsole.Ask<string>("Updated email:");
+
+            if (AnsiConsole.Confirm("Update contact phone number?"))
+                contact.PhoneNumber = AnsiConsole.Ask<string>("Updated phone number:");
 
             _contactController.UpdateContact(contact);
         }
