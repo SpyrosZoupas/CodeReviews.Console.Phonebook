@@ -4,7 +4,7 @@ namespace Phonebook.SpyrosZoupas.DAL
 {
     public class ContactController
     {
-        public static void AddContact()
+        public void AddContact()
         {
             string name = AnsiConsole.Ask<string>("Contact's name:");
             string email = AnsiConsole.Ask<string>("Contact's email:");
@@ -17,22 +17,24 @@ namespace Phonebook.SpyrosZoupas.DAL
             db.SaveChanges();
         }
 
-        public static void DeleteContact()
+        public void DeleteContact()
+        {
+            using var db = new ContactContext();
+            //db.Remove();
+        }
+
+        public void GetContactById()
         {
             throw new NotImplementedException();
         }
 
-        public static void GetContactById()
+        public List<Contact> GetContacts()
         {
-            throw new NotImplementedException();
+            using var db = new ContactContext();
+            return db.Contacts.ToList();
         }
 
-        public static void GetContacts()
-        {
-            throw new NotImplementedException();
-        }
-
-        public static void UpdateContact()
+        public void UpdateContact()
         {
             throw new NotImplementedException();
         }

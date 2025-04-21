@@ -5,6 +5,15 @@ namespace Phonebook.SpyrosZoupas
 {
     public class UserInput
     {
+        private readonly UserInterface _userInterface;
+        private readonly ContactController _contactController;
+        
+        public UserInput(UserInterface userInterface, ContactController contactController)
+        {
+            _userInterface = userInterface;
+            _contactController = contactController;
+        }
+
         public void GetUserInput()
         {
             var isAppRunning = true;
@@ -23,19 +32,19 @@ namespace Phonebook.SpyrosZoupas
                 switch (option)
                 {
                     case MenuOptions.AddContact:
-                        ContactController.AddContact();
+                        _contactController.AddContact();
                         break;
                     case MenuOptions.DeleteContact:
-                        ContactController.DeleteContact();
+                        _contactController.DeleteContact();
                         break;
                     case MenuOptions.UpdateContact:
-                        ContactController.UpdateContact();
+                        _contactController.UpdateContact();
                         break;
                     case MenuOptions.ViewContact:
-                        ContactController.GetContactById();
+                        _contactController.GetContactById();
                         break;
                     case MenuOptions.ViewAllContacts:
-                        ContactController.GetContacts();
+                        _userInterface.ShowContactTable(_contactController.GetContacts());
                         break;
                 }
             }
