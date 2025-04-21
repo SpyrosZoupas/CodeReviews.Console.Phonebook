@@ -4,15 +4,11 @@ namespace Phonebook.SpyrosZoupas.DAL
 {
     public class ContactController
     {
-        public void AddContact()
+        public void AddContact(Contact contact)
         {
-            string name = AnsiConsole.Ask<string>("Contact's name:");
-            string email = AnsiConsole.Ask<string>("Contact's email:");
-            string phoneNumber = AnsiConsole.Ask<string>("Contact's phone number:");
-
             using var db = new ContactContext();
             // EF Core sets auto-increment to properties named ID by default
-            db.Add(new Contact { Name = name, Email = email, PhoneNumber = phoneNumber });
+            db.Add(contact);
 
             db.SaveChanges();
         }
@@ -23,9 +19,10 @@ namespace Phonebook.SpyrosZoupas.DAL
             //db.Remove();
         }
 
-        public void GetContactById()
+        public Contact GetContactById(int id)
         {
-            throw new NotImplementedException();
+            using var db = new ContactContext();
+            return db.Contacts.SingleOrDefault(c=> c.Id == id);
         }
 
         public List<Contact> GetContacts()
