@@ -1,5 +1,6 @@
 ﻿using Phonebook.SpyrosZoupas.DAL;
 using Spectre.Console;
+using System.ComponentModel.DataAnnotations;
 
 namespace Phonebook.SpyrosZoupas
 {
@@ -18,10 +19,38 @@ namespace Phonebook.SpyrosZoupas
         public void InsertContact()
         {
             string name = AnsiConsole.Ask<string>("Contact's name:");
-            string email = AnsiConsole.Ask<string>("Contact's email:");
-            string phoneNumber = AnsiConsole.Ask<string>("Contact's phone number:");
+            string email = GetEmailInput("Contact's email (please use format email@domain):");
+            string phoneNumber = GetPhoneNumberInput("Contact's phone number:");
 
             _contactController.AddContact(new Contact { Name = name, Email = email, PhoneNumber = phoneNumber });
+        }
+
+        private string GetEmailInput(string message)
+        {
+            return AnsiConsole.Prompt(
+                new TextPrompt<string>(message)
+                .Validate((s) =>
+                {
+                    var emailAddressAttribute = new EmailAddressAttribute();
+                    return emailAddressAttribute.IsValid(s)
+                        ? Spectre.Console.ValidationResult.Success()
+                        : Spectre.Console.ValidationResult.Error("[red]Invalid email format. Please enter an email in the format of email@domain[/]");
+           
+                }));
+        }
+
+        private string GetPhoneNumberInput(string message)
+        {
+            return AnsiConsole.Prompt(
+                new TextPrompt<string>(message)
+                .Validate((s) =>
+                {
+                    var emailAddressAttribute = new EmailAddressAttribute();
+                    return emailAddressAttribute.IsValid(s)
+                        ? Spectre.Console.ValidationResult.Success()
+                        : Spectre.Console.ValidationResult.Error("[red]Invalid email format.[/]");
+
+                }));
         }
 
         public void UpdateContact()
@@ -34,10 +63,10 @@ namespace Phonebook.SpyrosZoupas
                 contact.Name = AnsiConsole.Ask<string>("Updated name:");
 
             if (AnsiConsole.Confirm("Update contact email?"))
-                contact.Email = AnsiConsole.Ask<string>("Updated email:");
+                contact.Email = GetEmailInput("Updated email (please use format name@domain:");
 
             if (AnsiConsole.Confirm("Update contact phone number?"))
-                contact.PhoneNumber = AnsiConsole.Ask<string>("Updated phone number:");
+                contact.PhoneNumber = GetPhoneNumberInput("Updated phone number:");
 
             _contactController.UpdateContact(contact);
         }
