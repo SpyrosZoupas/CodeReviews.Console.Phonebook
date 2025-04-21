@@ -24,6 +24,18 @@ namespace Phonebook.SpyrosZoupas
             _contactController.AddContact(new Contact { Name = name, Email = email, PhoneNumber = phoneNumber });
         }
 
+        public void UpdateContact()
+        {
+            // contact object is being returned from DbContext so from DB so it has accurate ID which is being used to identity
+            // which row to update!
+            var contact = GetContactOptionInput();
+            contact.Name = AnsiConsole.Ask<string>("Updated name:");
+            contact.Email = AnsiConsole.Ask<string>("Updated email:");
+            contact.PhoneNumber = AnsiConsole.Ask<string>("Updated phone number:");
+
+            _contactController.UpdateContact(contact);
+        }
+
         public void DeleteContact() =>
             _contactController.DeleteContact(GetContactOptionInput());
 

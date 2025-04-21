@@ -35,7 +35,7 @@ namespace Phonebook.SpyrosZoupas
                         _contactService.DeleteContact();
                         break;
                     case MenuOptions.UpdateContact:
-                        //_contactController.UpdateContact();
+                        _contactService.UpdateContact();
                         break;
                     case MenuOptions.ViewContact:
                         _contactService.GetContact();
