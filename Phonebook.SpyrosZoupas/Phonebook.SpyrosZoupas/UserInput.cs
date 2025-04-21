@@ -1,17 +1,12 @@
-﻿using Phonebook.SpyrosZoupas.DAL;
-using Spectre.Console;
+﻿using Spectre.Console;
 
 namespace Phonebook.SpyrosZoupas
 {
     public class UserInput
     {
-        private readonly UserInterface _userInterface;
-        private readonly ContactController _contactController;
         private readonly ContactService _contactService;
-        public UserInput(UserInterface userInterface, ContactController contactController, ContactService contactService)
+        public UserInput(ContactService contactService)
         {
-            _userInterface = userInterface;
-            _contactController = contactController;
             _contactService = contactService;
         }
 
@@ -34,19 +29,19 @@ namespace Phonebook.SpyrosZoupas
                 switch (option)
                 {
                     case MenuOptions.AddContact:
-                        _contactController.AddContact(_contactService.CreateContactObjectForInsert());
+                        _contactService.InsertContact();
                         break;
                     case MenuOptions.DeleteContact:
-                        _contactController.DeleteContact();
+                        _contactService.DeleteContact();
                         break;
                     case MenuOptions.UpdateContact:
-                        _contactController.UpdateContact();
+                        //_contactController.UpdateContact();
                         break;
                     case MenuOptions.ViewContact:
-                        _userInterface.ShowContact(_contactService.GetContactOptionInput());
+                        _contactService.GetContact();
                         break;
                     case MenuOptions.ViewAllContacts:
-                        _userInterface.ShowContactTable(_contactController.GetContacts());
+                        _contactService.GetAllContacts();
                         break;
                     case MenuOptions.Quit:
                         Environment.Exit(0);
