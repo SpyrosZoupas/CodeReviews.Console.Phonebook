@@ -10,6 +10,7 @@ namespace Phonebook.SpyrosZoupas.DAL.Models
         public int CategoryId { get; set; }
         [Required]
         public string Name { get; set; }
+        [IgnoreForDisplay]
         public List<Contact> Contacts { get; set; }
     }
 }

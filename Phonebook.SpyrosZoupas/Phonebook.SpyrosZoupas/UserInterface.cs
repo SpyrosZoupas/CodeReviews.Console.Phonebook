@@ -1,6 +1,7 @@
 ﻿using Phonebook.SpyrosZoupas.DAL.Models;
 using Phonebook.SpyrosZoupas.Services;
 using Spectre.Console;
+using System.Reflection;
 using static Phonebook.SpyrosZoupas.Enums;
 
 namespace Phonebook.SpyrosZoupas
@@ -105,7 +106,7 @@ Phone Number: {contact.PhoneNumber}");
             }
 
             var table = new Table();
-            var props = data[0].GetType().GetProperties();
+            var props = data[0].GetType().GetProperties().Where(p => p.GetCustomAttribute<IgnoreForDisplayAttribute>() == null);
             foreach (var prop in props)
             {
                 if (prop.Name.Contains("Id"))
