@@ -22,6 +22,7 @@ namespace Phonebook.SpyrosZoupas
             var isAppRunning = true;
             while (isAppRunning)
             {
+                Console.Clear();
                 var option = AnsiConsole.Prompt(
                 new SelectionPrompt<MenuOptions>()
                 .Title("What would you like to do?")
@@ -54,7 +55,7 @@ namespace Phonebook.SpyrosZoupas
                         ShowContact(_contactService.GetContact());
                         break;
                     case MenuOptions.ViewAllContacts:
-                        ShowTable<Contact>(_contactService.GetAllContacts());
+                        ShowContactTable(_contactService.GetAllContacts());
                         break;
                     case MenuOptions.SendEmail:
                         _contactService.SendEmail();
@@ -72,7 +73,7 @@ namespace Phonebook.SpyrosZoupas
                         ShowCategory(_categoryService.GetCategory());
                         break;
                     case MenuOptions.ViewAllCategories:
-                        ShowTable<Category>(_categoryService.GetAllCategories());
+                        ShowCategoryTable(_categoryService.GetAllCategories());
                         break;
                     case MenuOptions.Quit:
                         Environment.Exit(0);
@@ -86,7 +87,8 @@ namespace Phonebook.SpyrosZoupas
             var panel = new Panel($@"Id: {contact.ContactId}
 Name: {contact.Name}
 Email: {contact.Email}
-Phone Number: {contact.PhoneNumber}");
+Phone Number: {contact.PhoneNumber}
+Category: {contact.Category.Name}");
             panel.Header = new PanelHeader("Contact Info");
             panel.Padding = new Padding(2, 2, 2, 2);
 
@@ -97,28 +99,29 @@ Phone Number: {contact.PhoneNumber}");
             Console.Clear();
         }
 
-        public void ShowTable<T>(List<T> data)
+        public void ShowContactTable(List<Contact> contacts)
         {
-            if (data.Count == 0)
+            if (contacts.Count == 0)
             {
                 AnsiConsole.MarkupLine("[red]No data to display.[/]");
                 return;
             }
 
             var table = new Table();
-            var props = data[0].GetType().GetProperties().Where(p => p.GetCustomAttribute<IgnoreForDisplayAttribute>() == null);
-            foreach (var prop in props)
-            {
-                if (prop.Name.Contains("Id"))
-                    table.AddColumn("Id");
-                else
-                    table.AddColumn(prop.Name);
-            }
+            table.AddColumn("Id");
+            table.AddColumn("Name");
+            table.AddColumn("Email");
+            table.AddColumn("Phone Number");
+            table.AddColumn("Category");
 
-            foreach (T row in data)
+            foreach (Contact contact in contacts)
             {
-                var cells = props.Select(p => p.GetValue(row).ToString()).ToArray();
-                table.AddRow(cells);
+                table.AddRow(
+                    contact.ContactId.ToString(),
+                    contact.Name,
+                    contact.Email,
+                    contact.PhoneNumber,
+                    contact.Category.Name);
             }
 
             AnsiConsole.Write(table);
@@ -136,6 +139,32 @@ Name: {category.Name}");
             panel.Padding = new Padding(2, 2, 2, 2);
 
             AnsiConsole.Write(panel);
+
+            Console.WriteLine("Enter any key to go back to Main Menu");
+            Console.ReadLine();
+            Console.Clear();
+        }
+
+        public void ShowCategoryTable(List<Category> categories)
+        {
+            if (categories.Count == 0)
+            {
+                AnsiConsole.MarkupLine("[red]No data to display.[/]");
+                return;
+            }
+
+            var table = new Table();
+            table.AddColumn("Id");
+            table.AddColumn("Name");
+
+            foreach (Category category in categories)
+            {
+                table.AddRow(
+                    category.CategoryId.ToString(),
+                    category.Name);
+            }
+
+            AnsiConsole.Write(table);
 
             Console.WriteLine("Enter any key to go back to Main Menu");
             Console.ReadLine();

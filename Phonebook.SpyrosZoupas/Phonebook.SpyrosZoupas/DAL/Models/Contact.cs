@@ -13,10 +13,8 @@ namespace Phonebook.SpyrosZoupas.DAL.Models
         public string Name { get; set; }
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
-        [IgnoreForDisplay]
         public int CategoryId { get; set; }
 
-        [IgnoreForDisplay]
         [ForeignKey(nameof(CategoryId))]
         public Category Category { get; set; }
     }

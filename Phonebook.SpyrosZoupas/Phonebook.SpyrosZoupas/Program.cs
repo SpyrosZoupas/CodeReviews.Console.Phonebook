@@ -4,7 +4,7 @@ using Phonebook.SpyrosZoupas.Services;
 
 ContactController contactController = new ContactController();
 CategoryController categoryController = new CategoryController();
-ContactService contactService = new ContactService(contactController);
 CategoryService categoryService = new CategoryService(categoryController);
+ContactService contactService = new ContactService(contactController, categoryService);
 UserInterface userInterface = new UserInterface(contactService, categoryService);
 userInterface.MainMenu();

@@ -50,5 +50,15 @@ namespace Phonebook.SpyrosZoupas
             int id = categories.First(c => c.Name == option).CategoryId;
             return _categoryController.GetCategoryById(id);
         }
+
+        public int GetCategoryIdInput()
+        {
+            var categories = _categoryController.GetCategories();
+            var option = AnsiConsole.Prompt(new SelectionPrompt<string>()
+                .Title("Choose Category")
+                .AddChoices(categories.Select(c => c.Name)));
+
+            return categories.First(c => c.Name == option).CategoryId;
+        }
     }
 }

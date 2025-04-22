@@ -1,4 +1,5 @@
-﻿using Phonebook.SpyrosZoupas.DAL.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using Phonebook.SpyrosZoupas.DAL.Models;
 
 namespace Phonebook.SpyrosZoupas.DAL.Controllers
 {
@@ -27,13 +28,17 @@ namespace Phonebook.SpyrosZoupas.DAL.Controllers
         public Contact GetContactById(int id)
         {
             using var db = new PhonebookContext();
-            return db.Contacts.SingleOrDefault(c=> c.ContactId == id);
+            return db.Contacts
+                .Include(x => x.Category)
+                .SingleOrDefault(c=> c.ContactId == id);
         }
 
         public List<Contact> GetContacts()
         {
             using var db = new PhonebookContext();
-            return db.Contacts.ToList();
+            return db.Contacts
+                .Include(x => x.Category)
+                .ToList();
         }
     }
 }

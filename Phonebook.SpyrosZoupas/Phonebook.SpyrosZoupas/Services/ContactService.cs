@@ -12,10 +12,12 @@ namespace Phonebook.SpyrosZoupas.Services
     public class ContactService
     {
         private readonly ContactController _contactController;
+        private readonly CategoryService _categoryService;
 
-        public ContactService(ContactController contactController)
+        public ContactService(ContactController contactController, CategoryService categoryService)
         {
             _contactController = contactController;
+            _categoryService = categoryService;
         }
 
         public void InsertContact()
@@ -23,9 +25,9 @@ namespace Phonebook.SpyrosZoupas.Services
             string name = AnsiConsole.Ask<string>("Contact's name:");
             string email = GetEmailInput("Contact's email");
             string phoneNumber = GetPhoneNumberInput("Contact's phone number");
-            string category = AnsiConsole.Ask<string>("Category to which the contact belongs to:");
+            int category = _categoryService.GetCategoryIdInput();
 
-            _contactController.AddContact(new Contact { Name = name, Email = email, PhoneNumber = phoneNumber });
+            _contactController.AddContact(new Contact { Name = name, Email = email, PhoneNumber = phoneNumber, CategoryId = category });
         }
 
         private string GetEmailInput(string message)
