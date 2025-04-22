@@ -9,7 +9,7 @@ using Phonebook.SpyrosZoupas.DAL;
 
 namespace Phonebook.SpyrosZoupas.Migrations
 {
-    [DbContext(typeof(ContactContext))]
+    [DbContext(typeof(PhonebookContext))]
     partial class ContactContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

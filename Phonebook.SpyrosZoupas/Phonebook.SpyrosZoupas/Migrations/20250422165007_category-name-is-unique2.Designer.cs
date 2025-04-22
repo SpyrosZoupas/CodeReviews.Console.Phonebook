@@ -10,7 +10,7 @@ using Phonebook.SpyrosZoupas.DAL;
 
 namespace Phonebook.SpyrosZoupas.Migrations
 {
-    [DbContext(typeof(ContactContext))]
+    [DbContext(typeof(PhonebookContext))]
     [Migration("20250422165007_category-name-is-unique2")]
     partial class categorynameisunique2
     {

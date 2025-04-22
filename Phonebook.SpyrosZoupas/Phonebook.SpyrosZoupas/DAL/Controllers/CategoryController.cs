@@ -2,38 +2,38 @@
 
 namespace Phonebook.SpyrosZoupas.DAL.Controllers
 {
-    public class ContactController
+    public class CategoryController
     {
-        public void AddContact(Contact contact)
+        public void AddCategory(Category Category)
         {
             using var db = new PhonebookContext();
-            db.Add(contact);
+            db.Add(Category);
             db.SaveChanges();
         }
 
-        public void DeleteContact(Contact contact)
+        public void DeleteCategory(Category Category)
         {
             using var db = new PhonebookContext();
-            db.Remove(contact);
+            db.Remove(Category);
             db.SaveChanges();
         }
-        public void UpdateContact(Contact contact)
+        public void UpdateCategory(Category Category)
         {
             using var db = new PhonebookContext();
-            db.Update(contact);
+            db.Update(Category);
             db.SaveChanges();
         }
 
-        public Contact GetContactById(int id)
+        public Category GetCategoryById(int id)
         {
             using var db = new PhonebookContext();
-            return db.Contacts.SingleOrDefault(c=> c.ContactId == id);
+            return db.Categories.SingleOrDefault(c=> c.CategoryId == id);
         }
 
-        public List<Contact> GetContacts()
+        public List<Category> GetCategorys()
         {
             using var db = new PhonebookContext();
-            return db.Contacts.ToList();
+            return db.Categories.ToList();
         }
     }
 }

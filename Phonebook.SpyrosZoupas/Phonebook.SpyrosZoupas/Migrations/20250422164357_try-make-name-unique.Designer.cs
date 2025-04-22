@@ -10,7 +10,7 @@ using Phonebook.SpyrosZoupas.DAL;
 
 namespace Phonebook.SpyrosZoupas.Migrations
 {
-    [DbContext(typeof(ContactContext))]
+    [DbContext(typeof(PhonebookContext))]
     [Migration("20250422164357_try-make-name-unique")]
     partial class trymakenameunique
     {
