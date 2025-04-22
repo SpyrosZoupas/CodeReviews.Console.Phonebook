@@ -1,8 +1,7 @@
 ﻿using Phonebook.SpyrosZoupas;
-using Phonebook.SpyrosZoupas.DAL;
+using Phonebook.SpyrosZoupas.DAL.Controllers;
 
 ContactController contactController = new ContactController();
-UserInterface userInterface = new UserInterface();
-ContactService contactService = new ContactService(contactController, userInterface);
-UserInput userInput = new UserInput(contactService);
-userInput.GetUserInput();
+    ContactService contactService = new ContactService(contactController);
+    UserInterface userInterface = new UserInterface(contactService);
+    userInterface.MainMenu();

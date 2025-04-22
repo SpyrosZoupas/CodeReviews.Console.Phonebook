@@ -1,6 +1,7 @@
-﻿using Spectre.Console;
+﻿using Phonebook.SpyrosZoupas.DAL.Models;
+using Spectre.Console;
 
-namespace Phonebook.SpyrosZoupas.DAL
+namespace Phonebook.SpyrosZoupas.DAL.Controllers
 {
     public class ContactController
     {
@@ -27,7 +28,7 @@ namespace Phonebook.SpyrosZoupas.DAL
         public Contact GetContactById(int id)
         {
             using var db = new ContactContext();
-            return db.Contacts.SingleOrDefault(c=> c.Id == id);
+            return db.Contacts.SingleOrDefault(c=> c.ContactId == id);
         }
 
         public List<Contact> GetContacts()

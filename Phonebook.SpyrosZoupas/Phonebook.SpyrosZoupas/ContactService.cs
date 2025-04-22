@@ -1,9 +1,10 @@
-﻿using Phonebook.SpyrosZoupas.DAL;
-using Spectre.Console;
+﻿using Spectre.Console;
 using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
 using MailKit.Net.Smtp;
 using MimeKit;
+using Phonebook.SpyrosZoupas.DAL.Models;
+using Phonebook.SpyrosZoupas.DAL.Controllers;
 
 namespace Phonebook.SpyrosZoupas
 {
@@ -11,12 +12,10 @@ namespace Phonebook.SpyrosZoupas
     public class ContactService
     {
         private readonly ContactController _contactController;
-        private readonly UserInterface _userInterface;
 
-        public ContactService(ContactController contactController, UserInterface userInterface)
+        public ContactService(ContactController contactController)
         {
             _contactController = contactController;
-            _userInterface = userInterface;
         }
 
         public void InsertContact()
@@ -77,11 +76,11 @@ namespace Phonebook.SpyrosZoupas
         public void DeleteContact() =>
             _contactController.DeleteContact(GetContactOptionInput());
 
-        public void GetAllContacts() =>
-            _userInterface.ShowContactTable(_contactController.GetContacts());
+        public List<Contact> GetAllContacts() =>
+            _contactController.GetContacts();
 
-        public void GetContact() =>
-            _userInterface.ShowContact(GetContactOptionInput());
+        public Contact GetContact() =>
+            GetContactOptionInput();
 
         private Contact GetContactOptionInput()
         {
@@ -90,7 +89,7 @@ namespace Phonebook.SpyrosZoupas
                 .Title("Choose Contact")
                 .AddChoices(contacts.Select(c => c.Name)));
 
-            int id = contacts.First(c => c.Name == option).Id;
+            int id = contacts.First(c => c.Name == option).ContactId;
             return _contactController.GetContactById(id);
         }
 
@@ -114,7 +113,7 @@ Spiros"
 
             using var client = new SmtpClient();
             client.Connect("smtp.gmail.com", 587, false);
-            client.Authenticate("ghideharug@gmail.com", "");
+            client.Authenticate("ghideharug@gmail.com", "lcdp yvjx pqey cnsu");
             client.Send(mailMessage);
             client.Disconnect(true);
         }
