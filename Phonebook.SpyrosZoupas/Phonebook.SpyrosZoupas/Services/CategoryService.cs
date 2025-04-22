@@ -1,8 +1,4 @@
 ﻿using Spectre.Console;
-using System.ComponentModel.DataAnnotations;
-using System.Text.RegularExpressions;
-using MailKit.Net.Smtp;
-using MimeKit;
 using Phonebook.SpyrosZoupas.DAL.Models;
 using Phonebook.SpyrosZoupas.DAL.Controllers;
 

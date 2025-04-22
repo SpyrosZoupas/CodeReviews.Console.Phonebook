@@ -1,4 +1,5 @@
-﻿using Spectre.Console;
+﻿using Phonebook.SpyrosZoupas.Services;
+using Spectre.Console;
 using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
 
@@ -6,16 +7,15 @@ namespace Phonebook.SpyrosZoupas.Util
 {
     public class Validation
     {
-        public string GetEmailInput(string message) =>
+        public string GetEmailInput(string message, string name) =>
             AnsiConsole.Prompt(
                 new TextPrompt<string>($"{message} (please use format email@domain.tld):")
                 .Validate((s) =>
                 {
-                    var emailAddressAttribute = new EmailAddressAttribute();
-                    return Regex.IsMatch(s, @"^\w+([-+.']\w+)*@(\[*\w+)([-.]\w+)*\.\w+([-.]\w+\])*$")
+                    EmailService es = new EmailService();
+                    return Regex.IsMatch(s, @"^\w+([-+.']\w+)*@(\[*\w+)([-.]\w+)*\.\w+([-.]\w+\])*$") && es.ConfirmEmail(s, name)
                         ? Spectre.Console.ValidationResult.Success()
-                        : Spectre.Console.ValidationResult.Error("[red]Invalid email format. Please enter an email in the format of email@domain.tld.[/]");
-
+                        : Spectre.Console.ValidationResult.Error("[red]Invalid email. Please enter an email in the format of email@domain.tld.[/]");
                 }));
 
         public string GetPhoneNumberInput(string message) =>

@@ -1,7 +1,6 @@
 ﻿using Phonebook.SpyrosZoupas.DAL.Models;
 using Phonebook.SpyrosZoupas.Services;
 using Spectre.Console;
-using System.Reflection;
 using static Phonebook.SpyrosZoupas.Enums;
 
 namespace Phonebook.SpyrosZoupas
@@ -58,7 +57,7 @@ namespace Phonebook.SpyrosZoupas
                         ShowContactTable(_contactService.GetAllContacts());
                         break;
                     case MenuOptions.SendEmail:
-                        _contactService.SendEmail();
+                        _contactService.SendEmailToContact();
                         break;
                     case MenuOptions.AddCategory:
                         _categoryService.InsertCategory();
