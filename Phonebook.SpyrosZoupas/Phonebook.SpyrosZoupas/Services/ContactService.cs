@@ -1,6 +1,4 @@
 ﻿using Spectre.Console;
-using MailKit.Net.Smtp;
-using MimeKit;
 using Phonebook.SpyrosZoupas.DAL.Models;
 using Phonebook.SpyrosZoupas.DAL.Controllers;
 using Phonebook.SpyrosZoupas.Util;
