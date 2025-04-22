@@ -1,4 +1,5 @@
 ﻿using Phonebook.SpyrosZoupas.DAL.Models;
+using Phonebook.SpyrosZoupas.Services;
 using Spectre.Console;
 using static Phonebook.SpyrosZoupas.Enums;
 
@@ -7,10 +8,12 @@ namespace Phonebook.SpyrosZoupas
     public class UserInterface
     {
         private readonly ContactService _contactService;
+        private readonly CategoryService _categoryService;
 
-        public UserInterface(ContactService contactService)
+        public UserInterface(ContactService contactService, CategoryService categoryService)
         {
             _contactService = contactService;
+            _categoryService = categoryService;
         }
 
         public void MainMenu()
@@ -28,6 +31,11 @@ namespace Phonebook.SpyrosZoupas
                     MenuOptions.ViewAllContacts,
                     MenuOptions.ViewContact,
                     MenuOptions.SendEmail,
+                    MenuOptions.AddCategory,
+                    MenuOptions.DeleteCategory,
+                    MenuOptions.UpdateCategory,
+                    MenuOptions.ViewAllCategories,
+                    MenuOptions.ViewCategory,
                     MenuOptions.Quit));
 
                 switch (option)
@@ -45,10 +53,25 @@ namespace Phonebook.SpyrosZoupas
                         ShowContact(_contactService.GetContact());
                         break;
                     case MenuOptions.ViewAllContacts:
-                        ShowContactTable(_contactService.GetAllContacts());
+                        ShowTable<Contact>(_contactService.GetAllContacts());
                         break;
                     case MenuOptions.SendEmail:
                         _contactService.SendEmail();
+                        break;
+                    case MenuOptions.AddCategory:
+                        _categoryService.InsertCategory();
+                        break;
+                    case MenuOptions.DeleteCategory:
+                        _categoryService.DeleteCategory();
+                        break;
+                    case MenuOptions.UpdateCategory:
+                        _categoryService.UpdateCategory();
+                        break;
+                    case MenuOptions.ViewCategory:
+                        ShowCategory(_categoryService.GetCategory());
+                        break;
+                    case MenuOptions.ViewAllCategories:
+                        ShowTable<Category>(_categoryService.GetAllCategories());
                         break;
                     case MenuOptions.Quit:
                         Environment.Exit(0);
@@ -73,20 +96,45 @@ Phone Number: {contact.PhoneNumber}");
             Console.Clear();
         }
 
-        public void ShowContactTable(List<Contact> contacts)
+        public void ShowTable<T>(List<T> data)
         {
-            var table = new Table();
-            table.AddColumn("Id");
-            table.AddColumn("Name");
-            table.AddColumn("Email");
-            table.AddColumn("Phone Number");
-
-            foreach (Contact contact in contacts)
+            if (data.Count == 0)
             {
-                table.AddRow(contact.ContactId.ToString(), contact.Name, contact.Email, contact.PhoneNumber);
+                AnsiConsole.MarkupLine("[red]No data to display.[/]");
+                return;
+            }
+
+            var table = new Table();
+            var props = data[0].GetType().GetProperties();
+            foreach (var prop in props)
+            {
+                if (prop.Name.Contains("Id"))
+                    table.AddColumn("Id");
+                else
+                    table.AddColumn(prop.Name);
+            }
+
+            foreach (T row in data)
+            {
+                var cells = props.Select(p => p.GetValue(row).ToString()).ToArray();
+                table.AddRow(cells);
             }
 
             AnsiConsole.Write(table);
+
+            Console.WriteLine("Enter any key to go back to Main Menu");
+            Console.ReadLine();
+            Console.Clear();
+        }
+
+        public void ShowCategory(Category category)
+        {
+            var panel = new Panel($@"Id: {category.CategoryId}
+Name: {category.Name}");
+            panel.Header = new PanelHeader("Category Info");
+            panel.Padding = new Padding(2, 2, 2, 2);
+
+            AnsiConsole.Write(panel);
 
             Console.WriteLine("Enter any key to go back to Main Menu");
             Console.ReadLine();

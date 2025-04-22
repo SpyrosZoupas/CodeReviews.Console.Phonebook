@@ -10,6 +10,11 @@
             ViewContact,
             ViewAllContacts,
             SendEmail,
+            AddCategory,
+            DeleteCategory,
+            UpdateCategory,
+            ViewCategory,
+            ViewAllCategories,
             Quit
         }
     }

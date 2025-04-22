@@ -30,7 +30,7 @@ namespace Phonebook.SpyrosZoupas.DAL.Controllers
             return db.Categories.SingleOrDefault(c=> c.CategoryId == id);
         }
 
-        public List<Category> GetCategorys()
+        public List<Category> GetCategories()
         {
             using var db = new PhonebookContext();
             return db.Categories.ToList();

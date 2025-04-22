@@ -1,7 +1,10 @@
 ﻿using Phonebook.SpyrosZoupas;
 using Phonebook.SpyrosZoupas.DAL.Controllers;
+using Phonebook.SpyrosZoupas.Services;
 
 ContactController contactController = new ContactController();
-    ContactService contactService = new ContactService(contactController);
-    UserInterface userInterface = new UserInterface(contactService);
-    userInterface.MainMenu();
+CategoryController categoryController = new CategoryController();
+ContactService contactService = new ContactService(contactController);
+CategoryService categoryService = new CategoryService(categoryController);
+UserInterface userInterface = new UserInterface(contactService, categoryService);
+userInterface.MainMenu();

@@ -6,7 +6,7 @@ using MimeKit;
 using Phonebook.SpyrosZoupas.DAL.Models;
 using Phonebook.SpyrosZoupas.DAL.Controllers;
 
-namespace Phonebook.SpyrosZoupas
+namespace Phonebook.SpyrosZoupas.Services
 {
     // we need a service since we are interacting with the BD which shouldn't happen in UI classes
     public class ContactService
@@ -23,6 +23,7 @@ namespace Phonebook.SpyrosZoupas
             string name = AnsiConsole.Ask<string>("Contact's name:");
             string email = GetEmailInput("Contact's email");
             string phoneNumber = GetPhoneNumberInput("Contact's phone number");
+            string category = AnsiConsole.Ask<string>("Category to which the contact belongs to:");
 
             _contactController.AddContact(new Contact { Name = name, Email = email, PhoneNumber = phoneNumber });
         }
