@@ -25,7 +25,7 @@ namespace Phonebook.SpyrosZoupas.Services
             string name = AnsiConsole.Ask<string>("Contact's name:");
             string email = GetEmailInput("Contact's email");
             string phoneNumber = GetPhoneNumberInput("Contact's phone number");
-            int category = _categoryService.GetCategoryIdInput();
+            int category = _categoryService.GetCategoryOptionInput().CategoryId;
 
             _contactController.AddContact(new Contact { Name = name, Email = email, PhoneNumber = phoneNumber, CategoryId = category });
         }
@@ -66,12 +66,12 @@ namespace Phonebook.SpyrosZoupas.Services
 
             if (AnsiConsole.Confirm("Update contact name?"))
                 contact.Name = AnsiConsole.Ask<string>("Updated name:");
-
             if (AnsiConsole.Confirm("Update contact email?"))
                 contact.Email = GetEmailInput("Updated email");
-
             if (AnsiConsole.Confirm("Update contact phone number?"))
                 contact.PhoneNumber = GetPhoneNumberInput("Updated phone number");
+            if (AnsiConsole.Confirm("Update category?"))
+                contact.Category = _categoryService.GetCategoryOptionInput();
 
             _contactController.UpdateContact(contact);
         }

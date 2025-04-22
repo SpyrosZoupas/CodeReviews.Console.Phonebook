@@ -25,8 +25,7 @@ namespace Phonebook.SpyrosZoupas
         {
             var category = GetCategoryOptionInput();
 
-            if (AnsiConsole.Confirm("Update category name?"))
-                category.Name = AnsiConsole.Ask<string>("Updated category:");
+            category.Name = AnsiConsole.Ask<string>("Updated category:");
 
             _categoryController.UpdateCategory(category);
         }
@@ -40,7 +39,7 @@ namespace Phonebook.SpyrosZoupas
         public Category GetCategory() =>
             GetCategoryOptionInput();
 
-        private Category GetCategoryOptionInput()
+        public Category GetCategoryOptionInput()
         {
             var categories = _categoryController.GetCategories();
             var option = AnsiConsole.Prompt(new SelectionPrompt<string>()
@@ -49,16 +48,6 @@ namespace Phonebook.SpyrosZoupas
 
             int id = categories.First(c => c.Name == option).CategoryId;
             return _categoryController.GetCategoryById(id);
-        }
-
-        public int GetCategoryIdInput()
-        {
-            var categories = _categoryController.GetCategories();
-            var option = AnsiConsole.Prompt(new SelectionPrompt<string>()
-                .Title("Choose Category")
-                .AddChoices(categories.Select(c => c.Name)));
-
-            return categories.First(c => c.Name == option).CategoryId;
         }
     }
 }
