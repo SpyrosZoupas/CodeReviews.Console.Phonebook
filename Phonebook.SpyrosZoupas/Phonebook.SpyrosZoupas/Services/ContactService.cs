@@ -59,7 +59,7 @@ namespace Phonebook.SpyrosZoupas.Services
         public Contact GetContact() =>
             GetContactOptionInput();
 
-        private Contact GetContactOptionInput()
+        public Contact GetContactOptionInput()
         {
             var contacts = _contactController.GetContacts();
             var option = AnsiConsole.Prompt(new SelectionPrompt<string>()

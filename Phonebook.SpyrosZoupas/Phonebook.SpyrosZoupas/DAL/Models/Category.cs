@@ -1,7 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
-
-namespace Phonebook.SpyrosZoupas.DAL.Models
+﻿namespace Phonebook.SpyrosZoupas.DAL.Models
 {
     public class Category
     {

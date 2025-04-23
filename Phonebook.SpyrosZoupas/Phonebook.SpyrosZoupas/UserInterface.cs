@@ -1,7 +1,6 @@
 ﻿using Phonebook.SpyrosZoupas.DAL.Models;
 using Phonebook.SpyrosZoupas.Services;
 using Spectre.Console;
-using System.Globalization;
 using static Phonebook.SpyrosZoupas.Enums;
 
 namespace Phonebook.SpyrosZoupas
@@ -10,11 +9,13 @@ namespace Phonebook.SpyrosZoupas
     {
         private readonly ContactService _contactService;
         private readonly CategoryService _categoryService;
+        private readonly SkillService _skillService;
 
-        public UserInterface(ContactService contactService, CategoryService categoryService)
+        public UserInterface(ContactService contactService, CategoryService categoryService, SkillService skillService)
         {
             _contactService = contactService;
             _categoryService = categoryService;
+            _skillService = skillService;
         }
 
         public void MainMenu()
@@ -29,6 +30,7 @@ namespace Phonebook.SpyrosZoupas
                     .AddChoices(
                         MainMenuOptions.ManageContacts,
                         MainMenuOptions.ManageCategories,
+                        MainMenuOptions.ManageSkills,
                         MainMenuOptions.Quit));
 
                 switch (option)
@@ -38,6 +40,9 @@ namespace Phonebook.SpyrosZoupas
                         break;
                     case MainMenuOptions.ManageCategories:
                         CategoriesMenu();
+                        break;
+                    case MainMenuOptions.ManageSkills:
+                        SkillsMenu();
                         break;
                     case MainMenuOptions.Quit:
                         Console.WriteLine("Bye!");
@@ -128,6 +133,47 @@ namespace Phonebook.SpyrosZoupas
                         break;
                     case CategoryMenuOptions.GoBack:
                         isCategoriesMenuRunning = false;
+                        break;
+                }
+            }
+        }
+
+        public void SkillsMenu()
+        {
+            var isSkillsMenuRunning = true;
+            while (isSkillsMenuRunning)
+            {
+                Console.Clear();
+                var option = AnsiConsole.Prompt(
+                new SelectionPrompt<SkillMenuOptions>()
+                .Title("Skills Menu")
+                .AddChoices(
+                    SkillMenuOptions.AddSkill,
+                    SkillMenuOptions.DeleteSkill,
+                    SkillMenuOptions.UpdateSkill,
+                    SkillMenuOptions.ViewAllSkills,
+                    SkillMenuOptions.ViewSkill,
+                    SkillMenuOptions.GoBack));
+
+                switch (option)
+                {
+                    case SkillMenuOptions.AddSkill:
+                        _skillService.InsertSkill();
+                        break;
+                    case SkillMenuOptions.DeleteSkill:
+                        //_skillService.DeleteSkill();
+                        break;
+                    case SkillMenuOptions.UpdateSkill:
+                        //_skillService.UpdateSkill();
+                        break;
+                    case SkillMenuOptions.ViewSkill:
+                        //_skillService(_categoryService.GetSkill());
+                        break;
+                    case SkillMenuOptions.ViewAllSkills:
+                        //_skillService(_categoryService.GetAllSkills());
+                        break;
+                    case SkillMenuOptions.GoBack:
+                        isSkillsMenuRunning = false;
                         break;
                 }
             }

@@ -6,6 +6,7 @@
         {
             ManageContacts,
             ManageCategories,
+            ManageSkills,
             Quit
         }
 
@@ -27,6 +28,16 @@
             UpdateCategory,
             ViewCategory,
             ViewAllCategories,
+            GoBack
+        }
+
+        public enum SkillMenuOptions
+        {
+            AddSkill,
+            DeleteSkill,
+            UpdateSkill,
+            ViewSkill,
+            ViewAllSkills,
             GoBack
         }
     }

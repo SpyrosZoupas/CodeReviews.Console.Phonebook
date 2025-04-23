@@ -1,10 +1,10 @@
 ﻿namespace Phonebook.SpyrosZoupas.DAL.Models
 {
-    public class CountryContact
+    public class ContactSkill
     {
-        public int CountryId { get; set; }
-        public Country Country { get; set; }
         public int ContactId { get; set; }
         public Contact Contact { get; set; }
+        public int SkillId { get; set; }
+        public Skill Skill { get; set; }
     }
 }

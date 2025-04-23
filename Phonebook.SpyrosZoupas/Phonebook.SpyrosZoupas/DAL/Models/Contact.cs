@@ -8,6 +8,6 @@
         public string PhoneNumber { get; set; }
         public int CategoryId { get; set; }
         public Category Category { get; set; }
-        public ICollection<CountryContact> CountryContacts { get; set; }
+        public ICollection<ContactSkill> ContactSkills { get; set; }
     }
 }

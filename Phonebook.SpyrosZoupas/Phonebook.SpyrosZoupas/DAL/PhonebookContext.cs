@@ -16,18 +16,18 @@ namespace Phonebook.SpyrosZoupas.DAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<CountryContact>()
-                .HasKey(cc => new { cc.CountryId, cc.ContactId });
+            modelBuilder.Entity<ContactSkill>()
+                .HasKey(cc => new { cc.ContactId, cc.SkillId });
 
-            modelBuilder.Entity<CountryContact>()
+            modelBuilder.Entity<ContactSkill>()
                 .HasOne(cc => cc.Contact)
-                .WithMany(c => c.CountryContacts)
+                .WithMany(c => c.ContactSkills)
                 .HasForeignKey(cc => cc.ContactId);
 
-            modelBuilder.Entity<CountryContact>()
-                .HasOne(cc => cc.Country)
-                .WithMany(c => c.CountryContacts)
-                .HasForeignKey(cc => cc.CountryId);
+            modelBuilder.Entity<ContactSkill>()
+                .HasOne(cc => cc.Skill)
+                .WithMany(c => c.ContactSkills)
+                .HasForeignKey(cc => cc.SkillId);
 
             modelBuilder.Entity<Contact>()
                 .HasOne(c => c.Category)
