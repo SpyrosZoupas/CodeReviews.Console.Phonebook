@@ -16,71 +16,96 @@ namespace Phonebook.SpyrosZoupas.DAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<CountryContact>()
+                .HasKey(cc => new { cc.CountryId, cc.ContactId });
+
+            modelBuilder.Entity<CountryContact>()
+                .HasOne(cc => cc.Contact)
+                .WithMany(c => c.CountryContacts)
+                .HasForeignKey(cc => cc.ContactId);
+
+            modelBuilder.Entity<CountryContact>()
+                .HasOne(cc => cc.Country)
+                .WithMany(c => c.CountryContacts)
+                .HasForeignKey(cc => cc.CountryId);
+
             modelBuilder.Entity<Contact>()
-                .HasOne(p => p.Category)
-                .WithMany(c => c.Contacts)
-                .HasForeignKey(p => p.CategoryId);
+                .HasOne(c => c.Category)
+                .WithMany(cat => cat.Contacts)
+                .HasForeignKey(c => c.CategoryId);
+                
+
 
             modelBuilder.Entity<Category>()
                 .HasData(new List<Category>
                 {
-                new() {
-                    CategoryId = 1,
-                    Name = "Family"
-                },
-                new() {
-                    CategoryId = 2,
-                    Name = "Friends"
-                },
-                new() {
-                    CategoryId = 3,
-                    Name = "Coworkers"
-                },
-                new() {
-                    CategoryId = 4,
-                    Name = "Strangers"
-                }
+                    new Category
+                    {
+                        CategoryId = 1,
+                        Name = "Family"
+                    },
+                    new Category
+                    {
+                        CategoryId = 2,
+                        Name = "Friends"
+                    },
+                    new Category
+                    {
+                        CategoryId = 3,
+                        Name = "Coworkers"
+                    },
+                    new Category
+                    {
+                        CategoryId = 4,
+                        Name = "Strangers"
+                    }
                 });
 
             modelBuilder.Entity<Contact>()
                 .HasData(new List<Contact>
                 {
-                    new() {
+                    new Contact 
+                    {
                         ContactId = 1,
                         CategoryId = 1,
                         Name = "Dummy Name 1",
                         PhoneNumber = "+4412345678901",
                         Email = "dummy@email.com"
                     },
-                    new() {
+                    new Contact 
+                    {
                         ContactId = 2,
                         CategoryId = 1,
                         Name = "Dummy Name 2",
                         PhoneNumber = "+4412345678901",
                         Email = "dummy@email.com"
                     },
-                    new() {
+                    new Contact 
+                    {
                         ContactId = 3,
                         CategoryId = 2,
                         Name = "Dummy Name 3",
                         PhoneNumber = "+4412345678901",
                         Email = "dummy@email.com"
                     },
-                    new() {
+                    new Contact 
+                    {
                         ContactId = 4,
                         CategoryId = 3,
                         Name = "Dummy Name 4",
                         PhoneNumber = "+4412345678901",
                         Email= "dummy@email.com"
                     },
-                    new() {
+                    new Contact 
+                    {
                         ContactId = 5,
                         CategoryId = 4,
                         Name = "Dummy Name 5",
                         PhoneNumber = "+4412345678901",
                         Email="dummy@email.com"
                     },
-                    new() {
+                    new Contact 
+                    {
                         ContactId = 6,
                         CategoryId = 1,
                         Name = "Dummy Name 6",
