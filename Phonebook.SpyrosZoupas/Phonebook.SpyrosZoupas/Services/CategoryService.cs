@@ -42,8 +42,7 @@ namespace Phonebook.SpyrosZoupas
                 .Title("Choose Category")
                 .AddChoices(categories.Select(c => c.Name)));
 
-            int id = categories.First(c => c.Name == option).CategoryId;
-            return _categoryController.GetCategoryById(id);
+            return categories.First(c => c.Name == option); 
         }
     }
 }

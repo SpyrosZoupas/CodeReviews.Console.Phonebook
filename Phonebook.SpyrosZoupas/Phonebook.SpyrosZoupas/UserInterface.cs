@@ -1,6 +1,7 @@
 ﻿using Phonebook.SpyrosZoupas.DAL.Models;
 using Phonebook.SpyrosZoupas.Services;
 using Spectre.Console;
+using System.Globalization;
 using static Phonebook.SpyrosZoupas.Enums;
 
 namespace Phonebook.SpyrosZoupas
@@ -133,11 +134,14 @@ Category: {contact.Category.Name}");
         public void ShowCategory(Category category)
         {
             var panel = new Panel($@"Id: {category.CategoryId}
-Name: {category.Name}");
+Name: {category.Name}
+Number of Contacts under this category: {category.Contacts.Count}");
             panel.Header = new PanelHeader("Category Info");
             panel.Padding = new Padding(2, 2, 2, 2);
 
             AnsiConsole.Write(panel);
+
+            ShowContactTable(category.Contacts);
 
             Console.WriteLine("Enter any key to go back to Main Menu");
             Console.ReadLine();
