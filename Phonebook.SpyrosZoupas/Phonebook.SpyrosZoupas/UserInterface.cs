@@ -1,4 +1,5 @@
 ﻿using Phonebook.SpyrosZoupas.DAL.Models;
+using Phonebook.SpyrosZoupas.DAL.Models.DTOs;
 using Phonebook.SpyrosZoupas.Services;
 using Spectre.Console;
 using static Phonebook.SpyrosZoupas.Enums;
@@ -151,8 +152,8 @@ namespace Phonebook.SpyrosZoupas
                     SkillMenuOptions.AddSkill,
                     SkillMenuOptions.DeleteSkill,
                     SkillMenuOptions.UpdateSkill,
-                    SkillMenuOptions.ViewAllSkills,
                     SkillMenuOptions.ViewSkill,
+                    SkillMenuOptions.ViewAllSkills,
                     SkillMenuOptions.GoBack));
 
                 switch (option)
@@ -161,16 +162,18 @@ namespace Phonebook.SpyrosZoupas
                         _skillService.InsertSkill();
                         break;
                     case SkillMenuOptions.DeleteSkill:
-                        //_skillService.DeleteSkill();
+                        _skillService.DeleteSkill();
                         break;
                     case SkillMenuOptions.UpdateSkill:
-                        //_skillService.UpdateSkill();
+                        _skillService.UpdateSkill();
                         break;
                     case SkillMenuOptions.ViewSkill:
-                        //_skillService(_categoryService.GetSkill());
+                        var skill = _skillService.GetSkill();
+                        ShowSkill(skill);
+                        ShowContactForSkillTable(_skillService.GetContactsForSkill(skill));
                         break;
                     case SkillMenuOptions.ViewAllSkills:
-                        //_skillService(_categoryService.GetAllSkills());
+                        ShowSkillTable(_skillService.GetAllSkiills());
                         break;
                     case SkillMenuOptions.GoBack:
                         isSkillsMenuRunning = false;
@@ -262,6 +265,65 @@ Number of Contacts under this category: {category.Contacts.Count}");
                 table.AddRow(
                     category.CategoryId.ToString(),
                     category.Name);
+            }
+
+            AnsiConsole.Write(table);
+
+            Console.WriteLine("Enter any key to go back to Main Menu");
+            Console.ReadLine();
+            Console.Clear();
+        }
+
+        public void ShowSkillTable(List<Skill> skills)
+        {
+            if (skills.Count == 0)
+            {
+                AnsiConsole.MarkupLine("[red]No data to display.[/]");
+                return;
+            }
+
+            var table = new Table();
+            table.AddColumn("Id");
+            table.AddColumn("Name");
+
+            foreach (Skill skill in skills)
+            {
+                table.AddRow(
+                    skill.SkillId.ToString(),
+                    skill.Name);
+            }
+
+            AnsiConsole.Write(table);
+
+            Console.WriteLine("Enter any key to go back to Main Menu");
+            Console.ReadLine();
+            Console.Clear();
+        }
+
+        public void ShowSkill(Skill skill)
+        {
+            var panel = new Panel($@"Id: {skill.SkillId}
+Name: {skill.Name}");
+            panel.Header = new PanelHeader("Category Info");
+            panel.Padding = new Padding(2, 2, 2, 2);
+
+            AnsiConsole.Write(panel);
+        }
+
+        public void ShowContactForSkillTable(List<ContactForSkillViewDTO> contacts)
+        {
+            var table = new Table();
+            table.AddColumn("Id");
+            table.AddColumn("Name");
+            table.AddColumn("Category");
+
+            foreach (var contact in contacts)
+            {
+                table.AddRow(
+                    contact.Id.ToString(),
+                    contact.Name,
+                    contact.CategoryName
+                    );
             }
 
             AnsiConsole.Write(table);

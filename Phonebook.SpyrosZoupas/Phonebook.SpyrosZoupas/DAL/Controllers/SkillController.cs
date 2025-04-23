@@ -28,15 +28,17 @@ namespace Phonebook.SpyrosZoupas.DAL.Controllers
         //public Skill GetSkillById(int id)
         //{
         //    using var db = new PhonebookContext();
-        //    return db.Categories.SingleOrDefault(c=> c.SkillId == id);
+        //    return db.Categories.SingleOrDefault(c => c.SkillId == id);
         //}
 
-        //public List<Skill> GetCategories()
-        //{
-        //    using var db = new PhonebookContext();
-        //    return db.Categories
-        //        .Include(x => x.Contacts)
-        //        .ToList();
-        //}
+        public List<Skill> GetSkills()
+        {
+            using var db = new PhonebookContext();
+            return db.Skills
+                .Include(s => s.ContactSkills)
+                .ThenInclude(cs => cs.Contact)
+                .ThenInclude(c => c.Category)
+                .ToList();
+        }
     }
 }

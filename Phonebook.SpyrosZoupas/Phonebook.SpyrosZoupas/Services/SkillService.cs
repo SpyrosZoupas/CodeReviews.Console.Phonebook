@@ -2,6 +2,7 @@
 using Phonebook.SpyrosZoupas.DAL.Models;
 using Phonebook.SpyrosZoupas.DAL.Controllers;
 using Phonebook.SpyrosZoupas.Services;
+using Phonebook.SpyrosZoupas.DAL.Models.DTOs;
 
 namespace Phonebook.SpyrosZoupas
 {
@@ -42,32 +43,42 @@ namespace Phonebook.SpyrosZoupas
             return contacts;
         }
 
-        //public void UpdateSkill()
-        //{
-        //    var category = GetSkillOptionInput();
+        public void UpdateSkill()
+        {
+            var skill = GetSkillOptionInput();
 
-        //    category.Name = AnsiConsole.Ask<string>("Updated category:");
+            skill.Name = AnsiConsole.Ask<string>("Updated skill:");
 
-        //    _categoryController.UpdateSkill(category);
-        //}
+            _skillController.UpdateSkill(skill);
+        }
 
-        //public void DeleteSkill() =>
-        //    _categoryController.DeleteSkill(GetSkillOptionInput());
+        public void DeleteSkill() =>
+            _skillController.DeleteSkill(GetSkillOptionInput());
 
-        //public List<Skill> GetAllCategories() =>
-        //    _categoryController.GetCategories();
+        public List<Skill> GetAllSkiills() =>
+            _skillController.GetSkills();
 
-        //public Skill GetSkill() =>
-        //    GetSkillOptionInput();
+        public Skill GetSkill() =>
+            GetSkillOptionInput();
 
-        //public Skill GetSkillOptionInput()
-        //{
-        //    var categories = _categoryController.GetCategories();
-        //    var option = AnsiConsole.Prompt(new SelectionPrompt<string>()
-        //        .Title("Choose Skill")
-        //        .AddChoices(categories.Select(c => c.Name)));
+        public List<ContactForSkillViewDTO> GetContactsForSkill(Skill skill) =>
+            skill.ContactSkills
+                .Select(x => new ContactForSkillViewDTO
+                {
+                    Id = x.ContactId,
+                    Name = x.Contact.Name,
+                    CategoryName = x.Contact.Category.Name
+                })
+                .ToList();
 
-        //    return categories.First(c => c.Name == option); 
-        //}
+        public Skill GetSkillOptionInput()
+        {
+            var skills = _skillController.GetSkills();
+            var option = AnsiConsole.Prompt(new SelectionPrompt<string>()
+                .Title("Choose Skill")
+                .AddChoices(skills.Select(c => c.Name)));
+
+            return skills.First(c => c.Name == option);
+        }
     }
 }

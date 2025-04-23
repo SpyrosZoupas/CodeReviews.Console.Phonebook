@@ -11,6 +11,8 @@ namespace Phonebook.SpyrosZoupas.DAL
 
         public DbSet<Category> Categories { get; set; }
 
+        public DbSet<Skill> Skills { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
             optionsBuilder.UseSqlServer($"Server=(LocalDb)\\TheCSharpAcademy;Database=Phonebook;Trusted_Connection=True;");
 
@@ -20,14 +22,14 @@ namespace Phonebook.SpyrosZoupas.DAL
                 .HasKey(cc => new { cc.ContactId, cc.SkillId });
 
             modelBuilder.Entity<ContactSkill>()
-                .HasOne(cc => cc.Contact)
+                .HasOne(cs => cs.Contact)
                 .WithMany(c => c.ContactSkills)
-                .HasForeignKey(cc => cc.ContactId);
+                .HasForeignKey(cs => cs.ContactId);
 
             modelBuilder.Entity<ContactSkill>()
-                .HasOne(cc => cc.Skill)
+                .HasOne(cs => cs.Skill)
                 .WithMany(c => c.ContactSkills)
-                .HasForeignKey(cc => cc.SkillId);
+                .HasForeignKey(cs => cs.SkillId);
 
             modelBuilder.Entity<Contact>()
                 .HasOne(c => c.Category)
