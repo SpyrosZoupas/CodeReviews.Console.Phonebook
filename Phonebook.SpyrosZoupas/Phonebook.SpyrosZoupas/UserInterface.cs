@@ -24,59 +24,110 @@ namespace Phonebook.SpyrosZoupas
             {
                 Console.Clear();
                 var option = AnsiConsole.Prompt(
-                new SelectionPrompt<MenuOptions>()
-                .Title("What would you like to do?")
-                .AddChoices(
-                    MenuOptions.AddContact,
-                    MenuOptions.DeleteContact,
-                    MenuOptions.UpdateContact,
-                    MenuOptions.ViewAllContacts,
-                    MenuOptions.ViewContact,
-                    MenuOptions.SendEmail,
-                    MenuOptions.AddCategory,
-                    MenuOptions.DeleteCategory,
-                    MenuOptions.UpdateCategory,
-                    MenuOptions.ViewAllCategories,
-                    MenuOptions.ViewCategory,
-                    MenuOptions.Quit));
+                new SelectionPrompt<MainMenuOptions>()
+                    .Title("What would you like to do?")
+                    .AddChoices(
+                        MainMenuOptions.ManageContacts,
+                        MainMenuOptions.ManageCategories,
+                        MainMenuOptions.Quit));
 
                 switch (option)
                 {
-                    case MenuOptions.AddContact:
+                    case MainMenuOptions.ManageContacts:
+                        ContactsMenu();
+                        break;
+                    case MainMenuOptions.ManageCategories:
+                        CategoriesMenu();
+                        break;
+                    case MainMenuOptions.Quit:
+                        Console.WriteLine("Bye!");
+                        isAppRunning = false;
+                        break;
+                }
+            }
+        }
+
+        public void ContactsMenu()
+        {
+            var isContactMenuRunning = true;
+            while (isContactMenuRunning)
+            {
+                Console.Clear();
+                var option = AnsiConsole.Prompt(
+                new SelectionPrompt<ContactMenuOptions>()
+                .Title("Products Menu")
+                .AddChoices(
+                    ContactMenuOptions.AddContact,
+                    ContactMenuOptions.DeleteContact,
+                    ContactMenuOptions.UpdateContact,
+                    ContactMenuOptions.ViewAllContacts,
+                    ContactMenuOptions.ViewContact,
+                    ContactMenuOptions.SendEmail,
+                    ContactMenuOptions.GoBack));
+
+                switch (option)
+                {
+                    case ContactMenuOptions.AddContact:
                         _contactService.InsertContact();
                         break;
-                    case MenuOptions.DeleteContact:
+                    case ContactMenuOptions.DeleteContact:
                         _contactService.DeleteContact();
                         break;
-                    case MenuOptions.UpdateContact:
+                    case ContactMenuOptions.UpdateContact:
                         _contactService.UpdateContact();
                         break;
-                    case MenuOptions.ViewContact:
+                    case ContactMenuOptions.ViewContact:
                         ShowContact(_contactService.GetContact());
                         break;
-                    case MenuOptions.ViewAllContacts:
+                    case ContactMenuOptions.ViewAllContacts:
                         ShowContactTable(_contactService.GetAllContacts());
                         break;
-                    case MenuOptions.SendEmail:
+                    case ContactMenuOptions.SendEmail:
                         _contactService.SendEmailToContact();
                         break;
-                    case MenuOptions.AddCategory:
+                    case ContactMenuOptions.GoBack:
+                        isContactMenuRunning = false;
+                        break;
+                }
+            }
+        }
+
+        public void CategoriesMenu()
+        {
+            var isCategoriesMenuRunning = true;
+            while (isCategoriesMenuRunning)
+            {
+                Console.Clear();
+                var option = AnsiConsole.Prompt(
+                new SelectionPrompt<CategoryMenuOptions>()
+                .Title("Categories Menu")
+                .AddChoices(
+                    CategoryMenuOptions.AddCategory,
+                    CategoryMenuOptions.DeleteCategory,
+                    CategoryMenuOptions.UpdateCategory,
+                    CategoryMenuOptions.ViewAllCategories,
+                    CategoryMenuOptions.ViewCategory,
+                    CategoryMenuOptions.GoBack));
+
+                switch (option)
+                {
+                    case CategoryMenuOptions.AddCategory:
                         _categoryService.InsertCategory();
                         break;
-                    case MenuOptions.DeleteCategory:
+                    case CategoryMenuOptions.DeleteCategory:
                         _categoryService.DeleteCategory();
                         break;
-                    case MenuOptions.UpdateCategory:
+                    case CategoryMenuOptions.UpdateCategory:
                         _categoryService.UpdateCategory();
                         break;
-                    case MenuOptions.ViewCategory:
+                    case CategoryMenuOptions.ViewCategory:
                         ShowCategory(_categoryService.GetCategory());
                         break;
-                    case MenuOptions.ViewAllCategories:
+                    case CategoryMenuOptions.ViewAllCategories:
                         ShowCategoryTable(_categoryService.GetAllCategories());
                         break;
-                    case MenuOptions.Quit:
-                        Environment.Exit(0);
+                    case CategoryMenuOptions.GoBack:
+                        isCategoriesMenuRunning = false;
                         break;
                 }
             }

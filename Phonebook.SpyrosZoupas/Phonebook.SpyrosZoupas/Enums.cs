@@ -2,7 +2,14 @@
 {
     public class Enums
     {
-        public enum MenuOptions
+        public enum MainMenuOptions
+        {
+            ManageContacts,
+            ManageCategories,
+            Quit
+        }
+
+        public enum ContactMenuOptions
         {
             AddContact,
             DeleteContact,
@@ -10,12 +17,17 @@
             ViewContact,
             ViewAllContacts,
             SendEmail,
+            GoBack
+        }
+
+        public enum CategoryMenuOptions
+        {
             AddCategory,
             DeleteCategory,
             UpdateCategory,
             ViewCategory,
             ViewAllCategories,
-            Quit
+            GoBack
         }
     }
 }
