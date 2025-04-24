@@ -3,6 +3,7 @@ using Phonebook.SpyrosZoupas.DAL.Models;
 using Phonebook.SpyrosZoupas.DAL.Controllers;
 using Phonebook.SpyrosZoupas.Services;
 using Phonebook.SpyrosZoupas.DAL.Models.DTOs;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Phonebook.SpyrosZoupas
 {
@@ -74,6 +75,9 @@ namespace Phonebook.SpyrosZoupas
         public Skill GetSkillOptionInput()
         {
             var skills = _skillController.GetSkills();
+            if (skills.IsNullOrEmpty()) return null;
+
+
             var option = AnsiConsole.Prompt(new SelectionPrompt<string>()
                 .Title("Choose Skill")
                 .AddChoices(skills.Select(c => c.Name)));

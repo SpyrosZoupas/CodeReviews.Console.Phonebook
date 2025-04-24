@@ -1,6 +1,7 @@
 ﻿using Spectre.Console;
 using Phonebook.SpyrosZoupas.DAL.Models;
 using Phonebook.SpyrosZoupas.DAL.Controllers;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Phonebook.SpyrosZoupas
 {
@@ -38,6 +39,9 @@ namespace Phonebook.SpyrosZoupas
         public Category GetCategoryOptionInput()
         {
             var categories = _categoryController.GetCategories();
+            if (categories.IsNullOrEmpty()) return null;
+
+
             var option = AnsiConsole.Prompt(new SelectionPrompt<string>()
                 .Title("Choose Category")
                 .AddChoices(categories.Select(c => c.Name)));

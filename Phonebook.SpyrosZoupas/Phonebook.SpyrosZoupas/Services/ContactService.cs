@@ -2,6 +2,7 @@
 using Phonebook.SpyrosZoupas.DAL.Models;
 using Phonebook.SpyrosZoupas.DAL.Controllers;
 using Phonebook.SpyrosZoupas.Util;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Phonebook.SpyrosZoupas.Services
 {
@@ -62,6 +63,8 @@ namespace Phonebook.SpyrosZoupas.Services
         public Contact GetContactOptionInput()
         {
             var contacts = _contactController.GetContacts();
+            if (contacts.IsNullOrEmpty()) return null;
+
             var option = AnsiConsole.Prompt(new SelectionPrompt<string>()
                 .Title("Choose Contact")
                 .AddChoices(contacts.Select(c => c.Name)));
@@ -70,8 +73,10 @@ namespace Phonebook.SpyrosZoupas.Services
             return _contactController.GetContactById(id);
         }
     
-        public void SendEmailToContact() =>
-            _emailService.SendEmail(GetContactOptionInput());
-
+        public void SendEmailToContact()
+        {
+            var contact = GetContactOptionInput();
+            if (contact != null) _emailService.SendEmail(contact);
+        }
     }
 }

@@ -170,7 +170,6 @@ namespace Phonebook.SpyrosZoupas
                     case SkillMenuOptions.ViewSkill:
                         var skill = _skillService.GetSkill();
                         ShowSkill(skill);
-                        ShowContactForSkillTable(_skillService.GetContactsForSkill(skill));
                         break;
                     case SkillMenuOptions.ViewAllSkills:
                         ShowSkillTable(_skillService.GetAllSkiills());
@@ -184,15 +183,22 @@ namespace Phonebook.SpyrosZoupas
 
         public void ShowContact(Contact contact)
         {
-            var panel = new Panel($@"Id: {contact.ContactId}
+            if (contact == null)
+            {
+                AnsiConsole.MarkupLine("[red]No data to display.[/]");
+            }
+            else
+            {
+                var panel = new Panel($@"Id: {contact.ContactId}
 Name: {contact.Name}
 Email: {contact.Email}
 Phone Number: {contact.PhoneNumber}
 Category: {contact.Category.Name}");
-            panel.Header = new PanelHeader("Contact Info");
-            panel.Padding = new Padding(2, 2, 2, 2);
+                panel.Header = new PanelHeader("Contact Info");
+                panel.Padding = new Padding(2, 2, 2, 2);
 
-            AnsiConsole.Write(panel);
+                AnsiConsole.Write(panel);
+            }
 
             Console.WriteLine("Enter any key to go back to Main Menu");
             Console.ReadLine();
@@ -204,27 +210,28 @@ Category: {contact.Category.Name}");
             if (contacts.Count == 0)
             {
                 AnsiConsole.MarkupLine("[red]No data to display.[/]");
-                return;
             }
-
-            var table = new Table();
-            table.AddColumn("Id");
-            table.AddColumn("Name");
-            table.AddColumn("Email");
-            table.AddColumn("Phone Number");
-            table.AddColumn("Category");
-
-            foreach (Contact contact in contacts)
+            else
             {
-                table.AddRow(
-                    contact.ContactId.ToString(),
-                    contact.Name,
-                    contact.Email,
-                    contact.PhoneNumber,
-                    contact.Category.Name);
-            }
+                var table = new Table();
+                table.AddColumn("Id");
+                table.AddColumn("Name");
+                table.AddColumn("Email");
+                table.AddColumn("Phone Number");
+                table.AddColumn("Category");
 
-            AnsiConsole.Write(table);
+                foreach (Contact contact in contacts)
+                {
+                    table.AddRow(
+                        contact.ContactId.ToString(),
+                        contact.Name,
+                        contact.Email,
+                        contact.PhoneNumber,
+                        contact.Category.Name);
+                }
+
+                AnsiConsole.Write(table);
+            }
 
             Console.WriteLine("Enter any key to go back to Main Menu");
             Console.ReadLine();
@@ -233,15 +240,23 @@ Category: {contact.Category.Name}");
 
         public void ShowCategory(Category category)
         {
-            var panel = new Panel($@"Id: {category.CategoryId}
+            if (category == null)
+            {
+                AnsiConsole.MarkupLine("[red]No data to display.[/]");
+            }
+            else
+            {
+                var panel = new Panel($@"Id: {category.CategoryId}
 Name: {category.Name}
 Number of Contacts under this category: {category.Contacts.Count}");
-            panel.Header = new PanelHeader("Category Info");
-            panel.Padding = new Padding(2, 2, 2, 2);
+                panel.Header = new PanelHeader("Category Info");
+                panel.Padding = new Padding(2, 2, 2, 2);
 
-            AnsiConsole.Write(panel);
+                AnsiConsole.Write(panel);
 
-            ShowContactTable(category.Contacts);
+                if (category.Contacts.Count > 0)
+                    ShowContactTable(category.Contacts);
+            }
 
             Console.WriteLine("Enter any key to go back to Main Menu");
             Console.ReadLine();
@@ -253,21 +268,22 @@ Number of Contacts under this category: {category.Contacts.Count}");
             if (categories.Count == 0)
             {
                 AnsiConsole.MarkupLine("[red]No data to display.[/]");
-                return;
             }
-
-            var table = new Table();
-            table.AddColumn("Id");
-            table.AddColumn("Name");
-
-            foreach (Category category in categories)
+            else
             {
-                table.AddRow(
-                    category.CategoryId.ToString(),
-                    category.Name);
-            }
+                var table = new Table();
+                table.AddColumn("Id");
+                table.AddColumn("Name");
 
-            AnsiConsole.Write(table);
+                foreach (Category category in categories)
+                {
+                    table.AddRow(
+                        category.CategoryId.ToString(),
+                        category.Name);
+                }
+
+                AnsiConsole.Write(table);
+            }
 
             Console.WriteLine("Enter any key to go back to Main Menu");
             Console.ReadLine();
@@ -279,21 +295,22 @@ Number of Contacts under this category: {category.Contacts.Count}");
             if (skills.Count == 0)
             {
                 AnsiConsole.MarkupLine("[red]No data to display.[/]");
-                return;
             }
-
-            var table = new Table();
-            table.AddColumn("Id");
-            table.AddColumn("Name");
-
-            foreach (Skill skill in skills)
+            else
             {
-                table.AddRow(
-                    skill.SkillId.ToString(),
-                    skill.Name);
-            }
+                var table = new Table();
+                table.AddColumn("Id");
+                table.AddColumn("Name");
 
-            AnsiConsole.Write(table);
+                foreach (Skill skill in skills)
+                {
+                    table.AddRow(
+                        skill.SkillId.ToString(),
+                        skill.Name);
+                }
+
+                AnsiConsole.Write(table);
+            }
 
             Console.WriteLine("Enter any key to go back to Main Menu");
             Console.ReadLine();
@@ -302,12 +319,24 @@ Number of Contacts under this category: {category.Contacts.Count}");
 
         public void ShowSkill(Skill skill)
         {
-            var panel = new Panel($@"Id: {skill.SkillId}
+            if (skill == null)
+            {
+                AnsiConsole.MarkupLine("[red]No data to display.[/]");
+            }
+            else
+            {
+                var panel = new Panel($@"Id: {skill.SkillId}
 Name: {skill.Name}");
-            panel.Header = new PanelHeader("Category Info");
-            panel.Padding = new Padding(2, 2, 2, 2);
+                panel.Header = new PanelHeader("Category Info");
+                panel.Padding = new Padding(2, 2, 2, 2);
 
-            AnsiConsole.Write(panel);
+                AnsiConsole.Write(panel);
+                ShowContactForSkillTable(_skillService.GetContactsForSkill(skill));
+            }
+
+            Console.WriteLine("Enter any key to go back to Main Menu");
+            Console.ReadLine();
+            Console.Clear();
         }
 
         public void ShowContactForSkillTable(List<ContactForSkillViewDTO> contacts)
@@ -327,10 +356,6 @@ Name: {skill.Name}");
             }
 
             AnsiConsole.Write(table);
-
-            Console.WriteLine("Enter any key to go back to Main Menu");
-            Console.ReadLine();
-            Console.Clear();
         }
     }
 }

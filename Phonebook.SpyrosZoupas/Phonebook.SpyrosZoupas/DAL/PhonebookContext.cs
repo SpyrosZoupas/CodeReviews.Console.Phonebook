@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Phonebook.SpyrosZoupas.DAL.Models;
-using System;
 
 namespace Phonebook.SpyrosZoupas.DAL
 {
