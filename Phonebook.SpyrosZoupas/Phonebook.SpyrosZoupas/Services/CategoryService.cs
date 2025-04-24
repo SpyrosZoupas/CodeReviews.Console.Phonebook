@@ -39,7 +39,7 @@ namespace Phonebook.SpyrosZoupas
         public Category GetCategoryOptionInput()
         {
             var categories = _categoryController.GetCategories();
-            if (categories.IsNullOrEmpty()) return null;
+            if (categories.Count == 0) return null;
 
 
             var option = AnsiConsole.Prompt(new SelectionPrompt<string>()

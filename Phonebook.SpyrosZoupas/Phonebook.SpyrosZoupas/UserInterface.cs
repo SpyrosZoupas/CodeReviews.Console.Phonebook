@@ -69,6 +69,7 @@ namespace Phonebook.SpyrosZoupas
                     ContactMenuOptions.ViewAllContacts,
                     ContactMenuOptions.ViewContact,
                     ContactMenuOptions.SendEmail,
+                    ContactMenuOptions.SendSMS,
                     ContactMenuOptions.GoBack));
 
                 switch (option)
@@ -90,6 +91,9 @@ namespace Phonebook.SpyrosZoupas
                         break;
                     case ContactMenuOptions.SendEmail:
                         _contactService.SendEmailToContact();
+                        break;
+                    case ContactMenuOptions.SendSMS:
+                        _contactService.SendSmsToContact();
                         break;
                     case ContactMenuOptions.GoBack:
                         isContactMenuRunning = false;

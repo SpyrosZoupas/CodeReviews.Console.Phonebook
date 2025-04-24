@@ -73,9 +73,9 @@ namespace Phonebook.SpyrosZoupas
                 .ToList();
 
         public Skill GetSkillOptionInput()
-        {
+        {   
             var skills = _skillController.GetSkills();
-            if (skills.IsNullOrEmpty()) return null;
+            if (skills.Count == 0) return null;
 
 
             var option = AnsiConsole.Prompt(new SelectionPrompt<string>()

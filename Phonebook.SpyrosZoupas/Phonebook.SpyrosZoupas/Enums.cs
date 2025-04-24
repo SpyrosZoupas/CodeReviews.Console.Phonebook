@@ -18,6 +18,7 @@
             ViewContact,
             ViewAllContacts,
             SendEmail,
+            SendSMS,
             GoBack
         }
 

@@ -12,13 +12,15 @@ namespace Phonebook.SpyrosZoupas.Services
         private readonly ContactController _contactController;
         private readonly CategoryService _categoryService;
         private readonly EmailService _emailService;
+        private readonly SmsService _smsService;
         private readonly Validation _validator;
 
-        public ContactService(ContactController contactController, CategoryService categoryService, EmailService emailService, Validation validator)
+        public ContactService(ContactController contactController, CategoryService categoryService, EmailService emailService,SmsService smsService, Validation validator)
         {
             _contactController = contactController;
             _categoryService = categoryService;
             _emailService = emailService;
+            _smsService = smsService;
             _validator = validator;
         }
 
@@ -63,7 +65,7 @@ namespace Phonebook.SpyrosZoupas.Services
         public Contact GetContactOptionInput()
         {
             var contacts = _contactController.GetContacts();
-            if (contacts.IsNullOrEmpty()) return null;
+            if (contacts.Count == 0) return null;
 
             var option = AnsiConsole.Prompt(new SelectionPrompt<string>()
                 .Title("Choose Contact")
@@ -77,6 +79,12 @@ namespace Phonebook.SpyrosZoupas.Services
         {
             var contact = GetContactOptionInput();
             if (contact != null) _emailService.SendEmail(contact);
+        }
+
+        public void SendSmsToContact()
+        {
+            var contact = GetContactOptionInput();
+            if (contact != null) _smsService.SendMessage(contact);
         }
     }
 }

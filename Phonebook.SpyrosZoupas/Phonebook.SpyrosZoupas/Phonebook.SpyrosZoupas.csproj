@@ -19,6 +19,7 @@
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.4" />
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="9.0.4" />
     <PackageReference Include="Spectre.Console" Version="0.50.0" />
+    <PackageReference Include="Twilio" Version="7.10.0" />
   </ItemGroup>
 
 </Project>
