@@ -22,7 +22,8 @@ This is a phonebook application developed by using C#, Entity Framework & SQL Se
 * For the Email & SMS service, you will need to create your own secrets.json file and add your own credentials for the SMS and Email functionality
 * For the SMS service, you will also have to verify your number on a Twilio Trial account, and also get a virtual Twilio number from which you will send SMS messages
 * Your credentials should be entered in the following format in secrets.json:
-``` {
+```
+{
   "Email": {
     "smtp_username": "your@email",
     "smtp_password": "yourAppPassword"
@@ -36,7 +37,7 @@ This is a phonebook application developed by using C#, Entity Framework & SQL Se
 ```
 
 ## General Info
-1) Everytime the app starts, the database is deleted & re-created with dummy data
-2) The application consists of menus presenting CRUD options for Contacts, Categories & Skills
-3) Each contacts can belong to one category, a category can have many contacts. Each contact can have many skills, a skill can belong to many contacts.
-4) There is also an option to send an email or an SMS message to a specific contact (Contact will have to have verified Twilio phone number)
+* Everytime the app starts, the database is deleted & re-created with dummy data
+* The application consists of menus presenting CRUD options for Contacts, Categories & Skills
+* Each contacts can belong to one category, a category can have many contacts. Each contact can have many skills, a skill can belong to many contacts.
+* There is also an option to send an email or an SMS message to a specific contact (Contact will have to have verified Twilio phone number)
