@@ -23,7 +23,6 @@ namespace Phonebook.SpyrosZoupas.Util
                 new TextPrompt<string>($"{message} (please enter full phone number including country code):")
                 .Validate((s) =>
                 {
-                    var phoneNumberAttribute = new PhoneAttribute();
                     return Regex.Match(s, @"^(\+[0-9]{12})$").Success
                         ? Spectre.Console.ValidationResult.Success()
                         : Spectre.Console.ValidationResult.Error("[red]Invalid phone number format. Example of correct phone number: +441234567899[/]");

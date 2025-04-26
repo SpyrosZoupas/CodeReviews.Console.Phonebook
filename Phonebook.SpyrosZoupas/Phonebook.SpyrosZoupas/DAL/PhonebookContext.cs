@@ -1,12 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Phonebook.SpyrosZoupas.DAL.Models;
-using System.Configuration;
 
 namespace Phonebook.SpyrosZoupas.DAL
 {
     public class PhonebookContext : DbContext
     {
-        string connectionString = ConfigurationManager.ConnectionStrings["phonebook"].ConnectionString;
+        string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["phonebook"].ConnectionString;
 
         public DbSet<Contact> Contacts { get; set; }
 
