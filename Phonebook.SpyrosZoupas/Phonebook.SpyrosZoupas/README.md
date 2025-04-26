@@ -32,7 +32,8 @@ This is a phonebook application developed by using C#, Entity Framework & SQL Se
     "account_sid": "yourAccountSID",
    "auth_token": "yourAuthorisationToken"
   } 
-}```
+}
+```
 
 ## General Info
 1) Everytime the app starts, the database is deleted & re-created with dummy data
