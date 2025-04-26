@@ -60,9 +60,9 @@ namespace Phonebook.SpyrosZoupas
         public Skill GetSkill() =>
             GetSkillOptionInput();
 
-        public List<ContactForSkillViewDTO> GetContactsForSkill(Skill skill) =>
+        public List<ContactForSkillViewDto> GetContactsForSkill(Skill skill) =>
             skill.ContactSkills
-                .Select(x => new ContactForSkillViewDTO
+                .Select(x => new ContactForSkillViewDto
                 {
                     Id = x.ContactId,
                     Name = x.Contact.Name,

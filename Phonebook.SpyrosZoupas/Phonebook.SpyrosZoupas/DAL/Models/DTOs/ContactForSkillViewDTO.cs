@@ -1,6 +1,6 @@
 ﻿namespace Phonebook.SpyrosZoupas.DAL.Models.DTOs
 {
-    public class ContactForSkillViewDTO
+    public class ContactForSkillViewDto
     {
         public int Id { get; set; }
         public string Name { get; set; }

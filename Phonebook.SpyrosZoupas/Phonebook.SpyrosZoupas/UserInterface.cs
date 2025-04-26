@@ -343,7 +343,7 @@ Name: {skill.Name}");
             Console.Clear();
         }
 
-        public void ShowContactForSkillTable(List<ContactForSkillViewDTO> contacts)
+        public void ShowContactForSkillTable(List<ContactForSkillViewDto> contacts)
         {
             var table = new Table();
             table.AddColumn("Id");
