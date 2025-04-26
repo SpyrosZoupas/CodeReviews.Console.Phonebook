@@ -42,6 +42,7 @@ Spiros"
             }
             catch (SmtpCommandException e)
             {
+                AnsiConsole.MarkupLine($"[bold black on maroon]Sorry, something went wrong. Unable to confirm email due to exception: {e} \n Please check the email is in a valid format.[/]");
                 return false;
             }
             smtp.Disconnect(true);
@@ -78,7 +79,7 @@ Spiros"
             }
             catch (SmtpCommandException e)
             {
-                AnsiConsole.MarkupLine($"[bold black on maroon]Sorry, something went wrong. Unable to send email! Please check your email is in a valid format.[/]");
+                AnsiConsole.MarkupLine($"[bold black on maroon]Sorry, something went wrong. Unable to send email due to exception: {e} \n Please check the email is in a valid format.[/]");
             }
             smtp.Disconnect(true);
         }
