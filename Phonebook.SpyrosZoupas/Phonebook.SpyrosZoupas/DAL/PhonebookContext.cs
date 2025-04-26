@@ -4,12 +4,11 @@ using System.Configuration;
 
 namespace Phonebook.SpyrosZoupas.DAL
 {
-    // ANY changes to the Database Schema require a new migration + update-database command to take effect
-    public class PhonebookContext : DbContext // represents a session with the DB allows you to query the DB
+    public class PhonebookContext : DbContext
     {
         string connectionString = ConfigurationManager.ConnectionStrings["phonebook"].ConnectionString;
 
-        public DbSet<Contact> Contacts { get; set; } // represents a Contact table. Contact model is a row of Contact table
+        public DbSet<Contact> Contacts { get; set; }
 
         public DbSet<Category> Categories { get; set; }
 

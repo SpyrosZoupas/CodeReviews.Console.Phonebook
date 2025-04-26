@@ -3,11 +3,9 @@ using Phonebook.SpyrosZoupas.DAL.Models;
 using Phonebook.SpyrosZoupas.DAL.Controllers;
 using Phonebook.SpyrosZoupas.Services;
 using Phonebook.SpyrosZoupas.DAL.Models.DTOs;
-using Microsoft.IdentityModel.Tokens;
 
 namespace Phonebook.SpyrosZoupas
 {
-    // we need a service since we are interacting with the BD which shouldn't happen in UI classes
     public class SkillService
     {
         private readonly SkillController _skillController;

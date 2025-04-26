@@ -1,11 +1,9 @@
 ﻿using Spectre.Console;
 using Phonebook.SpyrosZoupas.DAL.Models;
 using Phonebook.SpyrosZoupas.DAL.Controllers;
-using Microsoft.IdentityModel.Tokens;
 
 namespace Phonebook.SpyrosZoupas
 {
-    // we need a service since we are interacting with the BD which shouldn't happen in UI classes
     public class CategoryService
     {
         private readonly CategoryController _categoryController;

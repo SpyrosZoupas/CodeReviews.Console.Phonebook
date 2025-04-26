@@ -2,11 +2,9 @@
 using Phonebook.SpyrosZoupas.DAL.Models;
 using Phonebook.SpyrosZoupas.DAL.Controllers;
 using Phonebook.SpyrosZoupas.Util;
-using Microsoft.IdentityModel.Tokens;
 
 namespace Phonebook.SpyrosZoupas.Services
 {
-    // we need a service since we are interacting with the BD which shouldn't happen in UI classes
     public class ContactService
     {
         private readonly ContactController _contactController;
@@ -37,8 +35,6 @@ namespace Phonebook.SpyrosZoupas.Services
 
         public void UpdateContact()
         {
-            // contact object is being returned from DbContext so from DB so it has accurate ID which is being used to identity
-            // which row to update!
             var contact = GetContactOptionInput();
 
             if (AnsiConsole.Confirm("Update contact name?"))

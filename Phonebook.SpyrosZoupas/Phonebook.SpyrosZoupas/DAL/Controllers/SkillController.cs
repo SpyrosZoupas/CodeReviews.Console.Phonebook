@@ -25,12 +25,6 @@ namespace Phonebook.SpyrosZoupas.DAL.Controllers
             db.SaveChanges();
         }
 
-        //public Skill GetSkillById(int id)
-        //{
-        //    using var db = new PhonebookContext();
-        //    return db.Categories.SingleOrDefault(c => c.SkillId == id);
-        //}
-
         public List<Skill> GetSkills()
         {
             using var db = new PhonebookContext();
